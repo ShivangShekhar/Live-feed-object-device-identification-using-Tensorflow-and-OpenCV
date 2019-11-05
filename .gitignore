@@ -1,4 +1,5 @@
-research/
+research/object_detection
+research/slim
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
