@@ -25,8 +25,9 @@ In order to build an object classification model, you'll need to follow these st
 Download the model from here: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
 The model I am using for my purpose is Faster-RCNN-Inception-V2
 Compile Protobufs and run setup.py from the command prompt. Head to the research directory and type the following command to convert all the .proto files into a _pb2.py  file:
-
+~~~
 protoc --python_out=. .\object_detection\protos\anchor_generator.proto .\object_detection\protos\argmax_matcher.proto .\object_detection\protos\bipartite_matcher.proto .\object_detection\protos\box_coder.proto .\object_detection\protos\box_predictor.proto .\object_detection\protos\eval.proto .\object_detection\protos\faster_rcnn.proto .\object_detection\protos\faster_rcnn_box_coder.proto .\object_detection\protos\grid_anchor_generator.proto .\object_detection\protos\hyperparams.proto .\object_detection\protos\image_resizer.proto .\object_detection\protos\input_reader.proto .\object_detection\protos\losses.proto .\object_detection\protos\matcher.proto .\object_detection\protos\mean_stddev_box_coder.proto .\object_detection\protos\model.proto .\object_detection\protos\optimizer.proto .\object_detection\protos\pipeline.proto .\object_detection\protos\post_processing.proto .\object_detection\protos\preprocessor.proto .\object_detection\protos\region_similarity_calculator.proto .\object_detection\protos\square_box_coder.proto .\object_detection\protos\ssd.proto .\object_detection\protos\ssd_anchor_generator.proto .\object_detection\protos\string_int_label_map.proto .\object_detection\protos\train.proto .\object_detection\protos\keypoint_box_coder.proto .\object_detection\protos\multiscale_anchor_generator.proto .\object_detection\protos\graph_rewriter.proto .\object_detection\protos\calibration.proto .\object_detection\protos\flexible_grid_anchor_generator.proto
+~~~
 
 (THIS IS NEEDED TO BE DONE FOR ALL FILES INDIVIDUALLY BECAUSE OF THE UPDATE AND HENCE THE *.PROTO METHOD WON'T WORK)
   
@@ -51,6 +52,7 @@ I classified the images of the three similar devices into 3 buckets:
   For example, say you are training a classifier to detect A, B, and C(A,B and C representing 3 different class labels). You will replace the following code in generate_tfrecord.py:
 
 # TO-DO replace this with label map
+~~~
 def class_text_to_int(row_label):
     if row_label == ' ':
         return 1
@@ -66,9 +68,9 @@ def class_text_to_int(row_label):
         return 6
     else:
         None
+ ~~~
 With this:
-
-# TO-DO replace this with label map
+~~~
 def class_text_to_int(row_label):
     if row_label == 'A':
         return 1
@@ -78,11 +80,14 @@ def class_text_to_int(row_label):
         return 3
     else:
         None
+ ~~~
   
   Activate your environment using conda activate gputest and change your directory to your working directory with cd ...\models\research\object_detection in the anaconda command prompt. 
   From the \object_detection folder, execute the following command in the Anaconda command prompt:
 
+~~~
 (gputest) C:\tensorflow1\models\research\object_detection> python xml_to_csv.py
+~~~
 
 Then, generate the TFRecord files by issuing these commands from the \object_detection folder:
 
@@ -96,6 +101,7 @@ These generate a train.record and a test.record file in \object_detection. These
 
 The label map ID numbers should be the same as what is defined in the generate_tfrecord.py file. For the A,B,C detector example mentioned in Step 4, the labelmap.pbtxt file will look like:
 
+~~~
 item {
   id: 1
   name: 'A'
@@ -110,21 +116,23 @@ item {
   id: 3
   name: 'C'
 }
-
+~~~
 Finally, the object detection training pipeline must be configured. It defines which model and what parameters will be used for training. This is the last step before running training!
 
 Navigate to C:\tensorflow1\models\research\object_detection\training\configs and copy the faster_rcnn_inception_v2_pets.config, then, open the file with a text editor. Make changes to the .config file, mainly changing the number of classes and examples, and adding the file paths to the training data.
 
 F: From the \object_detection directory, issue the following command to begin training:
-
+~~~
 python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
+~~~
 
 If everything has been set up correctly, TensorFlow will initialize the training. The initialization can take up to 30 seconds before the actual training begins.
 Each step of training reports the loss. It will start high and get lower and lower as training progresses.
  
 Let it run for 2-3 hours. You can view the progress of the training job by using TensorBoard. To do this, open a new instance of Anaconda Prompt, activate the tensorflow1 virtual environment, change to the C:\tensorflow1\models\research\object_detection directory, and issue the following command:
-
+~~~
 (gputest) C:\tensorflow1\models\research\object_detection>tensorboard --logdir=training
+~~~
 
 This will create a webpage on your local machine at YourPCName:6006, which can be viewed through a web browser. The TensorBoard page provides information and graphs that show how the training is progressing. One important graph is the Loss graph, which shows the overall loss of the classifier over time.
 
