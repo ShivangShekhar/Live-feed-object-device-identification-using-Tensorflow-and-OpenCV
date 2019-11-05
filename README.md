@@ -4,17 +4,17 @@ This repository is a tutorial for how to use TensorFlow's Object Detection API t
 
 In order to build an object classification model, you'll need to follow these steps:
 
-  1.Installing Anaconda and setting up the virtual environment
+ **1.Installing Anaconda and setting up the virtual environment
   
-  2.Gathering the images which will serve as the dataset for your model and getting all the required files
+ **2.Gathering the images which will serve as the dataset for your model and getting all the required files
   
-  3.Creating labelmaps and configuring training
+ **3.Creating labelmaps and configuring training
   
-  4.Training
+ **4.Training
   
-  5.Exporting the inference graph 
+ **5.Exporting the inference graph 
   
-  6.Running the code Object_detection_tutorial.pynb
+ **6.Running the code Object_detection_tutorial.pynb
  
  A: Please follow the steps in the link attached in order to set up the virtual environment and install tensorflow gpu for better performance. https://www.youtube.com/watch?v=tPq6NIboLSc&t=183s
       *** MAKE SURE YOU USE THE CODE CONDA INSTALL TENSORFLOW-GPU=1.X.X(X can be any value. for eg: tensorflow-fpu=1.14.0 in my case) SINCE SOME MODULES IN THE CODE HAVE BEEN REPLACED IN TENSORFLOW V2.0.0 LIBRARY AND I WILL TRY TO UPDATE IT FOR THE SAME
